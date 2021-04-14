@@ -8,18 +8,18 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ListView
 import com.example.memorylist.model.Memory
-import com.example.memorylist.Presenter
+import com.example.memorylist.presenter.MemoryListPresenter
 import com.example.memorylist.R
 import com.example.memorylist.view.adapter.MyListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var presenter: Presenter
+    private lateinit var presenter: MemoryListPresenter
     private lateinit var listView: ListView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter = Presenter(this)
+        presenter = MemoryListPresenter(this)
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             onNewItemClicked(view);
         }

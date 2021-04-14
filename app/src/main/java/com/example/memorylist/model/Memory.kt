@@ -1,7 +1,14 @@
 package com.example.memorylist.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
-class Memory(var name:String,var lasTime: Date,var img:String){
+@Entity
+data class Memory(
+    @PrimaryKey
+    var name:String,
+    var lasTime: Date,
+    var img:String?){
 
 }
