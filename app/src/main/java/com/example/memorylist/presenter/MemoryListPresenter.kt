@@ -7,8 +7,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MemoryListPresenter(private val view: MainActivity){
-    private lateinit var repo : MemoryRepository
-    private var memoryList= listOf(
+    private var repo : MemoryRepository? = null
+    private var memoryList=  listOf<Memory>()
+      /*  listOf(
         Memory("Douche",Date(),""),
         Memory("Médoc",Date(),""),
         Memory("Branlette",Date(),""),
@@ -25,24 +26,34 @@ class MemoryListPresenter(private val view: MainActivity){
         Memory("Médoc3",Date(),""),
         Memory("Branlette3",Date(),""),
         Memory("Manger3",Date(),"")
-    )
+    )*/
     fun onItemClicked(index :Int){
         view.onItemClicked(memoryList[index])
     }
     fun start(){
         view.initView()
-        view.updateView()
         initDb()
+        view.updateView()
     }
     fun getMemories():ArrayList<Memory>{
         return ArrayList(memoryList)
     }
     fun initDb(){
-        repo = MemoryRepository(view)
-
+        if(repo==null)
+            repo = MemoryRepository(view)
+        Thread{
+            memoryList = repo!!.getAllMemories()
+            view.runOnUiThread{
+                view.updateView()
+            }
+        }.start()
     }
-    fun updateDb(){
-
+    fun addMemory(memory:Memory){
+        Thread{
+            if(repo==null)
+                repo = MemoryRepository(view)
+            var res = repo!!.addMemory(memory)
+        }.start()
     }
     fun noMemory(): Boolean {
         return memoryList.isEmpty()

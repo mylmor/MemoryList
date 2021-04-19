@@ -9,7 +9,6 @@ class MemoryRepository(private val context: Context){
         context,
         AppDatabase::class.java, "database-name"
     ).build()
-
     fun closeDB(){
         db.close()
         db.isOpen
@@ -17,7 +16,13 @@ class MemoryRepository(private val context: Context){
     fun getAllMemories():List<Memory>{
         return db.memoryDao().getAll()
     }
+    fun addMemory(memory:Memory){
+        //handle exceptions here
+        return db.memoryDao().insert(memory)
+    }
     fun updateAllMemories(memories:List<Memory>){
-        return db.memoryDao().insertAll(memories)
+        Thread {
+           // var res = db.memoryDao().insertAll(memories)
+        }.start()
     }
 }

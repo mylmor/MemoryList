@@ -1,23 +1,27 @@
 package com.example.memorylist.dal
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.memorylist.model.Memory
+import com.example.memorylist.model.MemoryWithDates
 
 @Dao
 interface MemoryDao {
     @Query("SELECT * FROM memory")
     fun getAll(): List<Memory>
 
-    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
+    @Transaction
+    @Query("SELECT * FROM memory")
+    fun getAllWithDates():List<MemoryWithDates>
+  /*  @Query("SELECT * FROM Memory WHERE first_name LIKE :first AND " +
             "last_name LIKE :last LIMIT 1")
     fun findByName(first: String, last: String): Memory
-
+*/
     @Insert
-    fun insertAll(vararg users: Memory)
+    fun insertAll(memories: List<Memory>)
 
     @Delete
-    fun delete(user: Memory)
+    fun delete(memory: Memory)
+
+    @Insert
+    fun insert(memory: Memory)
 }

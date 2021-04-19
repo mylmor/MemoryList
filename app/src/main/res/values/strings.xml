@@ -12,4 +12,9 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="memory_title">memory</string>
     <string name="date">Never</string>
+    <string name="memory_extra">MEMORY_EXTRA</string>
+    <string name="memory_picture">memory_picture</string>
+    <string name="default_title">Memory Title</string>
+    <string name="last_date_default">11/09/2001</string>
+    <string name="historique">Historique :</string>
 </resources>

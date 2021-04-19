@@ -10,6 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.memorylist.model.Memory
 import com.example.memorylist.R
+import com.example.memorylist.model.DateFormater
+import com.squareup.picasso.Picasso
 import java.text.DateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,17 +29,13 @@ class MyListAdapter(
             rowMain.setBackgroundColor(altColor)
         val mem = myMemories[position]
         rowMain.findViewById<TextView>(R.id.row_title).text = mem.name
-        rowMain.findViewById<TextView>(R.id.row_date).text = reFormat(mem.lasTime)
+        rowMain.findViewById<TextView>(R.id.row_date).text = DateFormater.fullDate(mem.lasTime)
         rowMain.findViewById<TextView>(R.id.button_now).setOnClickListener {nowButtonClicked(position)}
         val imageView = rowMain.findViewById<ImageView>(R.id.resv_row_img)
-     //   if (resv.img != null)
-         //   Picasso.get().load(resv.img).into(imageView)
+        imageView.setImageResource(R.drawable.ic_launcher_foreground)
         return rowMain
     }
-    private val format = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.FRANCE)
-    private fun reFormat(date: Date):String{
-        return format.format(date)
-    }
+
     override fun getItem(position: Int): Memory = myMemories[position]
 
     override fun getItemId(position: Int): Long = position.toLong()

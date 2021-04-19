@@ -1,5 +1,6 @@
 package com.example.memorylist.view
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
@@ -20,15 +21,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         presenter = MemoryListPresenter(this)
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            onNewItemClicked(view);
-        }
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {startActivity(Intent(this, MemoryDisplayActivity::class.java))}
         presenter.start()
     }
     fun initView() {
         listView = this.findViewById(R.id.listview)
         listView.adapter = MyListAdapter(this, ArrayList(),nowButtonClicked)
-        listView.setOnItemClickListener { _, _, position, _ -> presenter.onItemClicked(position) }
+        listView.setOnItemClickListener { _, _, position, _ -> presenter.onItemClicked(position)}
         no_item.text = getString(R.string.loading)
     }
     private val nowButtonClicked = fun(position:Int) {
@@ -47,11 +46,10 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
-    private fun onNewItemClicked(e:Any){
-        toString()
-        // change activity
-    }
-    fun onItemClicked(item:Memory){
+    fun onItemClicked(memory:Memory){
+        val intent = Intent(this, MemoryDisplayActivity::class.java)
+        intent.putExtra(getString(R.string.memory_extra), memory)
+        startActivity(intent)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
